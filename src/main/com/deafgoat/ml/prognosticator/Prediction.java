@@ -24,7 +24,7 @@ import java.util.HashMap;
 import weka.core.Instance;
 
 /**
- * Models prediction results
+ * Models prediction results.
  */
 public final class Prediction implements Comparable<Prediction> {
 

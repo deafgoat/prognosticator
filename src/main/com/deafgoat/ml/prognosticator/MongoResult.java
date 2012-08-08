@@ -34,7 +34,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 /**
- * Stores model and experiment results to MongoDB
+ * Stores model and experiment results to MongoDB.
  */
 public class MongoResult extends MongoMgr {
 	/**

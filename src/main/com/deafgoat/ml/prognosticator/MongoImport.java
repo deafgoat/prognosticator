@@ -35,7 +35,7 @@ import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
 
 /**
- * Reads configuration files from a MongoDB collection..
+ * Reads configuration files from a MongoDB collection.
  */
 public class MongoImport extends MongoMgr {
 

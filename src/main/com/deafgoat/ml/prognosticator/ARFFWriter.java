@@ -47,7 +47,7 @@ import weka.core.Instances;
 import weka.core.Utils;
 
 /**
- * This class helps us create .ARFF files from .CSV dumps using custom
+ * This class helps us create ARFF files from CSV dumps using custom
  * configuration parameters.
  */
 public final class ARFFWriter {

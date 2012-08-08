@@ -32,7 +32,7 @@ import weka.filters.unsupervised.attribute.Center;
 import weka.filters.unsupervised.attribute.RemoveUseless;
 
 /**
- * Performs data pre-processing by applying filters to a set of WEKA instances.
+ * Performs data pre-processing by applying filters to a set of Weka instances.
  */
 public class InstancesFilter {
 
