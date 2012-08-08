@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+
+<!--
+Copyright 2012, Smet.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<project name="Prognosticator" default="usage" basedir=".">
+
+    <description>Machine Learning Environment</description>
+
+    <!-- set global properties for this build -->
+    <property name="dir.build" value="build"/>
+    <property name="dir.build.java" value="${dir.build}"/>
+    <property name="dir.src" value="src"/>
+    <property name="dir.src.java" value="src"/>
+    <property name="dir.lib" value="lib"/>
+    <property name="dir.config" value="config"/>
+    <property name="dir.dump" value="dump"/>
+
+    <path id="classpath.all"><fileset dir="${dir.lib}"><include name="*.jar"/></fileset></path>
+    <path id="classpath.cp"><pathelement location="${dir.build.java}"/></path>
+
+    <!-- ******************************************************************* -->
+    <!-- Compile all java files.                                             -->
+    <!-- ******************************************************************* -->
+
+    <target name="compile" description="Compile the script">
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${dir.build.java}"/>
+        <javac  destdir="${dir.build.java}"
+                debug="true" encoding="UTF-8"
+                fork="true"
+                classpathref="classpath.cp"
+                includeantruntime="false"
+                debuglevel="lines,vars,source">
+            <src path="${dir.src.java}"/>
+            <src path="${dir.src.java}/test"/>
+            <src path="${dir.src.java}/unit"/>
+            <src path="${dir.src.java}/example"/>
+            <compilerarg value="-Xlint:all,-fallthrough"/>
+            <classpath refid="classpath.all"/>
+        </javac>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Clean all temp files.                                               -->
+    <!-- ******************************************************************* -->
+
+    <target name="clean" description="Clean up">
+        <delete dir="${dir.build}"/>
+
+        <delete file="prognosticator.jar"/>
+        <delete file="prognosticator.log"/>
+
+        <delete>
+            <fileset dir="src/example/com/deafgoat/ml/prognosticator/example/stock">
+                <include name="*.arff"/>
+                <include name="*.model"/>
+            </fileset>
+            <fileset dir="src/example/com/deafgoat/ml/prognosticator/example/weather">
+                <include name="*.arff"/>
+                <include name="*.model"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Run an example.                                                     -->
+    <!-- ******************************************************************* -->
+
+    <target name="example" depends="compile">
+        <java classname="com.deafgoat.ml.prognosticator.example.${class}" fork="true" failonerror="true" maxmemory="1024m" classpathref="classpath.all">
+            <sysproperty key="user.timezone" value="GMT"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <classpath>
+                <pathelement path="${dir.build.java}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Run the unit tests.                                                 -->
+    <!-- ******************************************************************* -->
+
+    <target name="unit" depends="compile" description="Unit Tests">
+        <!-- Add test files -->
+        <copy todir="${basedir}">
+            <fileset dir="${dir.dump}" excludes="**/*.java"/>
+            <fileset dir="${dir.config}" excludes="**/*.java"/>
+        </copy>
+
+        <junit printsummary="yes" haltonerror="no" haltonfailure="no">
+            <sysproperty key="basedir" value="${dir.build}"/>
+            <classpath>
+                <pathelement location="${dir.build}"/>
+                <pathelement path="${dir.lib}/*.jar"/>
+            </classpath>
+            <classpath refid="classpath.all"/>
+            <formatter type="brief"/>
+            <batchtest todir="">
+                <fileset dir="${dir.build}">
+                    <include name="com/deafgoat/ml/prognosticator/*UnitTests.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <!-- Remove test artifacts -->
+        <delete >
+            <fileset dir="${basedir}" includes="*.prop"/>
+            <fileset dir="${basedir}" includes="*.json"/>
+            <fileset dir="${basedir}" includes="*.csv"/>
+            <fileset dir="${basedir}" includes="*.tsv"/>
+            <fileset dir="${basedir}" includes="*.txt"/>
+            <fileset dir="${basedir}" includes="*.png"/>
+            <fileset dir="${basedir}" includes="*.arff"/>
+            <fileset dir="${basedir}" includes="*.model"/>
+            <fileset dir="${basedir}" includes="*.log"/>
+        </delete>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Run the integration tests.                                          -->
+    <!-- ******************************************************************* -->
+
+    <target name="test" depends="compile" description="Integration Tests">
+        <!-- Add test files -->
+        <copy todir="${basedir}">
+            <fileset dir="${dir.dump}" excludes="**/*.java"/>
+            <fileset dir="${dir.config}" excludes="**/*.java"/>
+        </copy>
+
+        <junit printsummary="yes" haltonerror="no" haltonfailure="no">
+            <sysproperty key="basedir" value="${dir.build}"/>
+            <classpath>
+                <pathelement location="${dir.build}"/>
+                <pathelement path="${dir.lib}/*.jar"/>
+            </classpath>
+            <classpath refid="classpath.all"/>
+            <!-- <formatter type="brief"/> -->
+            <batchtest todir="">
+                <fileset dir="${dir.build}">
+                    <include name="com/deafgoat/ml/prognosticator/*IntTests.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <!-- Remove test artifacts -->
+        <delete >
+        <fileset dir="${basedir}" includes="*.prop"/>
+        <fileset dir="${basedir}" includes="*.json"/>
+        <fileset dir="${basedir}" includes="*.csv"/>
+        <fileset dir="${basedir}" includes="*.tsv"/>
+        <fileset dir="${basedir}" includes="*.txt"/>
+        <fileset dir="${basedir}" includes="*.png"/>
+        <fileset dir="${basedir}" includes="*.arff"/>
+        <fileset dir="${basedir}" includes="*.model"/>
+        <fileset dir="${basedir}" includes="*.log"/>
+        </delete>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Generate the Javadocs.                                              -->
+    <!-- ******************************************************************* -->
+
+    <target name="javadocs" depends="compile" description="Generate Javadocs">
+
+        <delete dir="${dir.build}/javadocs/"/>
+
+        <javadoc
+            packagenames="com.deafgoat.ml.prognosticator"
+            sourcepath="src/main"
+            defaultexcludes="yes"
+            destdir="${dir.build}/javadocs"
+            author="true"
+            version="true"
+            source="1.5"
+            use="true"
+            access="protected">
+
+            <link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
+            <classpath refid="classpath.all"/>
+        </javadoc>
+
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Create the jar file.                                                -->
+    <!-- ******************************************************************* -->
+
+    <target name="jar" depends="clean, unit">
+        <jar destfile="prognosticator.jar" basedir="${dir.build.java}"></jar>
+    </target>
+
+    <!-- ******************************************************************* -->
+    <!-- Print the usage.                                                    -->
+    <!-- ******************************************************************* -->
+
+    <target name="usage">
+<echo>
+----------------------------------------
+
+- Clean the source tree ............................ clean
+
+- Compile the source code .......................... compile
+
+- Run the graphing class ........................... graph
+
+- Run the mongo to csv script ...................... m2v
+
+- Run the unit tests ............................... unit
+
+- Run the integration tests ........................ test
+
+- Generate the javadocs ............................ javadocs
+
+- Generate the jar file ............................ jar
+
+----------------------------------------
+</echo>
+    </target>
+
+</project>

@@ -1,0 +1,244 @@
+{
+    "name"  :   "weather-configuration",
+
+    "dumpARFF"    :   "dump/weather-dump.arff",
+
+    "data":
+    {
+        "dateFormat"    :   "yyyy-MM-dd",
+        "classValue"    :   "RainTomorrow",
+        "positiveClassValue"    :   "1",
+        "negativeClassValue"    :   "0",
+        "positiveClassWeight"   :   1,
+        "negativeClassWeight"   :   1
+    },
+
+    "errorAnalysis":
+    {
+        "truePositives"  :   "tp.txt",
+        "trueNegatives"  :   "tn.txt",
+        "falsePositives" :   "fp.txt",
+        "falseNegatives" :   "fn.txt"
+    },
+
+
+    "classifier":
+    {
+        "model":
+        {
+            "classifier"    :   "LogitBoost",
+            "outputModel"   :   "dump/classifier.model"
+        },
+
+        "crossValidation":
+        {
+            "numFolds"      :   10,
+            "arguments"     :   "",
+            "seed"          :   10
+        },
+
+        "classify":
+        {
+            "testARFF"     :   "dump/weather-test.arff",
+            "trainingARFF" :   "dump/weather-training.arff"
+        },
+        
+        "prediction":
+        {
+            "maxCount"          :   0,
+            "minProb"           :   0,
+            "file"              :   "dump/weather.tsv",
+            "onlyPosNominal"    :   false
+        },
+
+        "writeToMongoDB"  : true,
+
+        "writeToFile"  : true
+    },
+
+    "mongoDB":
+    {
+        "hostname"              :   "localhost",
+        "port"                  :   27017,
+        "database"              :   "weather",
+        "configCollection"      :   "configurations",
+        "modelCollection"       :   "experiments",
+        "predictionCollection"  :   "predictions"
+    },
+
+    "dump":
+    {
+        "file"                  :   "dump/weather.csv",
+
+        "attributes":
+        [ 
+            {
+                "rawAttributeName"  :                                    "Date",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                  "EvapMM",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                "Sunshine",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                            "MaxWindSpeed",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                 "Temp9am",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                             "RelHumid9am",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                "Cloud9am",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                            "WindSpeed9am",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                             "Pressure9am",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                 "Temp3pm",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                             "RelHumid3pm",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                "Cloud3pm",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                            "WindSpeed3pm",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                             "Pressure3pm",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                              "ChangeTemp",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                           "ChangeTempDir",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                           "ChangeTempMag",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                        "ChangeWindDirect",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                           "MaxWindPeriod",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                               "RainToday",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                               "TempRange",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                          "PressureChange",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                                 "RISK_MM",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            },
+
+            {
+                "rawAttributeName"  :                            "RainTomorrow",
+                "attributeName"     :                                        "",
+                "attributeType"     :                                 "nominal",
+                "include"           :                                      true
+            }
+        ]
+    }
+}

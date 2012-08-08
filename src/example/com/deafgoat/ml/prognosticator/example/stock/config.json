@@ -1,0 +1,126 @@
+{
+    "name"  :   "apple-stock-price",
+
+    "dumpARFF"    :   "src/example/com/deafgoat/ml/prognosticator/example/stock/apple-stock-price.arff",
+
+    "data":
+    {
+        "dateFormat"            : "yyyyMMddHHmm",
+        "classValue"            : "high",
+        "positiveClassValue"    :   "1",
+        "negativeClassValue"    :   "0",
+        "positiveClassWeight"   :   1,
+        "negativeClassWeight"   :   1
+    },
+
+    "errorAnalysis":
+    {
+        "truePositives"  :   "tp.txt",
+        "trueNegatives"  :   "tn.txt",
+        "falsePositives" :   "fp.txt",
+        "falseNegatives" :   "fn.txt"
+    },
+
+    "classifier":
+    {
+        "model":
+        {
+            "classifier"    :   "LWL",
+            "outputModel"   :   "src/example/com/deafgoat/ml/prognosticator/example/stock/apple-stock-price.model"
+        },
+
+        "crossValidation":
+        {
+            "numFolds"      :   10,
+            "arguments"     :   "",
+            "seed"          :   10
+        },
+
+        "classify":
+        {
+            "testARFF"     :   "src/example/com/deafgoat/ml/prognosticator/example/stock/apple-stock-price-test.arff",
+            "trainingARFF" :   "src/example/com/deafgoat/ml/prognosticator/example/stock/apple-stock-price-train.arff"
+        },
+
+        "prediction":
+        {
+            "maxCount"  :   0,
+            "minProb"   :   0,
+            "file"      :   "src/example/com/deafgoat/ml/prognosticator/example/stock/apple-stock-predictions.csv",
+            "onlyPosNominal"    :   true 
+        },
+
+        "writeToMongoDB"  : false,
+
+        "writeToFile"  : true
+    },
+
+    "mongoDB":
+    {
+        "hostname"              :   "localhost",
+        "port"                  :   27017,
+        "database"              :   "test",
+        "configCollection"      :   "config",
+        "modelCollection"       :   "experiments",
+        "predictionCollection"  :   "predictions"
+    },
+
+    "dump":
+    {
+        "file"                  :   "src/example/com/deafgoat/ml/prognosticator/example/stock/train.csv",
+
+        "attributes":
+        [
+            {
+                "rawAttributeName"  : "ticker",
+                "attributeName"     : "",
+                "attributeType"     : "nominal",
+                "include"           : false
+            },
+
+            {
+                "rawAttributeName"  : "date",
+                "attributeName"     : "",
+                "attributeType"     : "date",
+                "include"           : true
+            },
+
+            {
+                "rawAttributeName"  : "open",
+                "attributeName"     : "",
+                "attributeType"     : "numeric",
+                "include"           : true
+            },
+
+            {
+                "rawAttributeName"  : "high",
+                "attributeName"     : "",
+                "attributeType"     : "numeric",
+                "include"           : true
+            },
+
+            {
+                "rawAttributeName"  : "low",
+                "attributeName"     : "",
+                "attributeType"     : "numeric",
+                "include"           : true
+            },
+
+            {
+                "rawAttributeName"  : "close",
+                "attributeName"     : "",
+                "attributeType"     : "numeric",
+                "include"           : true
+            },
+
+
+            {
+                "rawAttributeName"  : "vol",
+                "attributeName"     : "",
+                "attributeType"     : "numeric",
+                "include"           : true
+            }
+
+        ]
+    }
+}
