@@ -179,7 +179,6 @@ public final class ARFFWriter {
 
 	/**
 	 * Prints missing count of all attributes across all instances
-	 * @param cls
 	 * @throws IOException
 	 */
 	public void printMissingAttributeCount() throws IOException {

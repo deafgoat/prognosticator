@@ -254,7 +254,7 @@ public class Charter {
 
 	/**
 	 * Saves a numeric chart to file
-	 * @param numerics The numeric to chart
+	 * @param numeric The numeric to chart
 	 * @param files List of files containing predictions to chart
 	 * @throws Exception If chart can not be generate
 	 */

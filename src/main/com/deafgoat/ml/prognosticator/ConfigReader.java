@@ -33,7 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Utility to read from .JSON configuration file or directly from a JSONObject.
+ * Utility to read from JSON configuration file or directly from a JSONObject.
  * Parses the JSON for the app's config
  */
 public final class ConfigReader {

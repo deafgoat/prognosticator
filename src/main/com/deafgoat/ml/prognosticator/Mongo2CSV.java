@@ -38,7 +38,7 @@ public final class Mongo2CSV extends MongoMgr {
 
 	/**
 	 * Helper method to join a list of strings
-	 * @param pColl The list/iterable to join
+	 * @param iterable The list/iterable to join
 	 * @param separator The delimeter to use for join
 	 */
 	public static String join(Iterable<? extends Object> iterable, String separator) {

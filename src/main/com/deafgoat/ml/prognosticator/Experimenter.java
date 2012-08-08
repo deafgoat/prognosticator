@@ -115,15 +115,14 @@ public final class Experimenter {
 	/**
 	 * Filters the supplied set of instances using a
 	 * set of filters for our test data.
-	 * @param dataSet The set of WEKA instances to be filtered
-	 * @param mode Indicates what dataset we are filtering
+	 * @param instances The set of WEKA instances to be filtered
 	 * @return the set of filtered instances
 	 * @throws Exception If filter(s) can not be applied to data
 	 */
-	public Instances filterData(Instances dataSet) throws Exception {
+	public Instances filterData(Instances instances) throws Exception {
 		_logger.info("Filtering data");
 		// Apply whatever filters you want here
-		_dataFilter = new InstancesFilter(dataSet);
+		_dataFilter = new InstancesFilter(instances);
 		// The filter below removes attributes of type string & date
 		// _dataFilter.removeTypeFilter(new String[] { "string", "date" });
 		return _dataFilter.getFilteredInstances();
