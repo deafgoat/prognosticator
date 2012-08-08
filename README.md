@@ -19,3 +19,8 @@ This is a very simple example of training a model and then running against some 
 
 `ant example -Dclass=stock.AppleStockPricePredictor`
 
+### Tomorrow Weather Predictor
+This predicts tomorrow's weather. To run type:
+
+`ant example -Dclass=weather.WeatherTomorrowPredictor`
+
