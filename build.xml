@@ -214,10 +214,6 @@ limitations under the License.
 
 - Compile the source code .......................... compile
 
-- Run the graphing class ........................... graph
-
-- Run the mongo to csv script ...................... m2v
-
 - Run the unit tests ............................... unit
 
 - Run the integration tests ........................ test
