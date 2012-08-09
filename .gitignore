@@ -27,3 +27,4 @@ test_san
 .classpath
 .project
 .txt
+*.class
