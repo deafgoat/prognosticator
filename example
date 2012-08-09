@@ -1,0 +1,7 @@
+echo `date`:	Cleaning build directory
+rm -rf build/
+mkdir build/
+echo `date`:	Compiling sources
+javac -Djava.ext.dirs=lib -d build/ $(find . -name *.java)
+echo `date`:	Running example
+java -cp build/:lib/* com.deafgoat.ml.prognosticator.example.$1

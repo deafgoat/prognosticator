@@ -15,14 +15,27 @@ The following are the various ant commands used in development/testing.
 ## Examples
 
 ### Apple Stock Price Predictor
-This is a very simple example of training a model and then running against some test data. To run type:
+This is a very simple example of training a model and then running against some test data. 
+
+To run with ant type:
 
 `ant example -Dclass=stock.AppleStockPricePredictor`
 
+To run with java type:
+
+`./example stock.AppleStockPricePredictor`
+
 ### Tomorrow's Weather Predictor
-This predicts tomorrow's weather. To run type:
+This predicts tomorrow's weather. 
+
+To run with ant type:
 
 `ant example -Dclass=weather.WeatherTomorrowPredictor`
+
+To run with java type:
+
+`./example weather.WeatherTomorrowPredictor`
+
 ## Configuration 
 This following documentation describes the various configuration options that are available in the application.
 
