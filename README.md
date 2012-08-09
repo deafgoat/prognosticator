@@ -1,6 +1,6 @@
 # Prognosticator
 ## Overview
-A Java application that enables users build machine learning models capable of making predictions on new data. The application uses WEKA algorithms for prediction tasks and includes several data pre-processing tools. Various configuration options allow the user to tailor the models, experiments, and predictions accordingly.
+A Java application that enables users to build machine learning models capable of making predictions on new data. The application uses WEKA algorithms for prediction tasks and includes several data pre-processing tools. Various configuration options allow the user to tailor the models, experiments, and predictions accordingly.
 
 
 ## Instructions
