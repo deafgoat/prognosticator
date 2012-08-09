@@ -33,7 +33,7 @@ public final class Prediction implements Comparable<Prediction> {
 		if (pred._instance.classAttribute().isNumeric()) {
 			return 0;
 		}
-	    return (_confidence < pred._confidence ? -1 : (_confidence == pred._confidence ? 0 : 1));
+	    return (_confidence > pred._confidence ? -1 : (_confidence == pred._confidence ? 0 : 1));
 	}
 
 	/**

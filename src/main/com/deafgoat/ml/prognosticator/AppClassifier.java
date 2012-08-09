@@ -244,7 +244,7 @@ public final class AppClassifier {
 			_logger.info("Writing predictions to file");
 			// sort prediction list
 			try {
-				Collections.sort(predictionList, Collections.reverseOrder());
+				Collections.sort(predictionList);
 			} catch (Exception e) {
 				_logger.debug("Can not use prediction compareTo");
 			}

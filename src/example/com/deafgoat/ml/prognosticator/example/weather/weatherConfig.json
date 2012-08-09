@@ -48,7 +48,7 @@
             "maxCount"          :   0,
             "minProb"           :   0,
             "file"              :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather-tomorrow-predictions.csv",
-            "onlyPosNominal"    :   false
+            "onlyPosNominal"    :   true
         },
 
         "writeToMongoDB"  : true,
