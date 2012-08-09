@@ -41,7 +41,7 @@ This following documentation describes the various configuration options that ar
 
 *	`name*`	:	The name of the current configuration. For each different configuration should have a unique `name`.
 *	`dumpARFF*`	:	The location of the entire dump (both training and test) if it exists. 
-*	`data`	:	Holds data-specific information:
+*	`data*`	:	Holds data-specific information:
 	*	`dataFormat*` : The format to expect data attributes.
 	*	`classValue*` : The class attribute to be predicted.
 	*	`positiveClassValue*` : For nominal class attributes, the value of the 'positive' case.
@@ -62,8 +62,8 @@ This following documentation describes the various configuration options that ar
 		*	`arguments`	:	Holds cross validation options.
 		*	`seed`	:	Random seed to use in cross validation.
 	*	`classify*`	:	Holds location of training and test arff file, if they exists. If they don't the application partitions (stratified for nominal class attributes) the `dump` data:
-		*	`testARFF`	: Path to the test ARFF file.
-		*	`trainingARFF`	:	Path to the training ARFF file.
+		*	`testARFF*`	: Path to the test ARFF file.
+		*	`trainingARFF*`	:	Path to the training ARFF file.
 	*	`prediction*`	:	Stores configuration option for test instance classifications:
 		*	`maxCount*`	:	The maximum number of predictions to return (0 for all).
 		*	`minProb*`	:	The minimum threshold for all model predictions.
@@ -84,7 +84,7 @@ This following documentation describes the various configuration options that ar
 		*	`rawAttributeName*`	:	Holds the name of each attribute in the dump, *exactly* as it appears in `file`.
 		*	`attributeName`	:	Holds the preferred name for the attribute.
 		*	`attributeType*`	:	Holds the WEKA attribute type for this attribute ()nominal, numeric, string or date).
-		*	`include`	:	Flag indicating if this attribute should be used in training.
+		*	`include*`	:	Flag indicating if this attribute should be used in training.
 	
 Options marked `*` are required.
 
