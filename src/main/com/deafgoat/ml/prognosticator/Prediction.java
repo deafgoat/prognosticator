@@ -20,8 +20,8 @@ package com.deafgoat.ml.prognosticator;
 import java.io.IOException;
 import java.util.HashMap;
 
-// Weka
 import weka.core.Instance;
+// Weka
 
 /**
  * Models prediction results.
@@ -30,11 +30,15 @@ public final class Prediction implements Comparable<Prediction> {
 
 	@Override
 	public int compareTo(Prediction pred) {
-		if (_distribution.length == 2) {
-			int index = (_distribution[0] > _distribution[1] ? 0 : 1);
-			return (_distribution[index] < pred._distribution[index] ? -1 : (_distribution[index] == pred._distribution[index] ? 0 : 1));
-		}
-		return 0;
+	    double maximum = _distribution[0];
+	    int index = 0;
+	    for (int i = 1; i < _distribution.length; i++) {
+	        if (_distribution[i] > maximum) {
+	            maximum = _distribution[i];
+	            index = i;
+	        }
+	    }
+	    return (_distribution[index] < pred._distribution[index] ? -1 : (_distribution[index] == pred._distribution[index] ? 0 : 1));
 	}
 
 	/**
@@ -55,10 +59,13 @@ public final class Prediction implements Comparable<Prediction> {
 	 * @return predicted class confidence
 	 */
 	public Double getConfidence() {
-		if (_distribution.length == 2) {
-			return (_distribution[0] > _distribution[1] ? _distribution[0] : _distribution[1]);
-		}
-		return 0.0;
+		double maximum = _distribution[0];
+	    for (int i = 1; i < _distribution.length; i++) {
+	        if (_distribution[i] > maximum) {
+	            maximum = _distribution[i];
+	        }
+	    }
+	    return maximum;
 	}
 
 	/**
@@ -81,7 +88,7 @@ public final class Prediction implements Comparable<Prediction> {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(_instanceIndex + _delimeter);
-		sb.append(_distribution[0] > _distribution[1] ? _distribution[0] + _delimeter : _distribution[1] + _delimeter);
+		sb.append(_confidence + _delimeter);
 		return sb.toString();
 	}
 	
@@ -122,11 +129,16 @@ public final class Prediction implements Comparable<Prediction> {
 	 * the predicted class of the instance
 	 */
 	private String _prediction;
-	
+
 	/** 
 	 * the index of the predicted instance
 	 */
 	private int _instanceIndex;
+	
+	/** 
+	 * the prediction confidence
+	 */
+	private double _confidence;
 
 	/**
 	 * Constructor for instance prediction
@@ -142,5 +154,6 @@ public final class Prediction implements Comparable<Prediction> {
 		_instance = instance;
 		_instanceIndex = instanceIndex;
 		_attributeIndex = getAttributeMap();
+		_confidence = getConfidence();
 	}
 }

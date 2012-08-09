@@ -56,7 +56,7 @@ public final class ARFFWriter {
 	 * Allows the user to add posite features for learning
 	 */
 	private void addUserDefinedAttributes() {
-		_logger.info("Adding user defined features...");
+		_logger.info("Adding user defined features");
 		// initialize list of user defined attributes
 		_userDefinedAttributes = new ArrayList<UserDefinedAttribute>();
 		// add each of the user defined attributes. e.g.
