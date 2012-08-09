@@ -76,6 +76,9 @@ public final class Prediction implements Comparable<Prediction> {
 	 * @return class confidence distribution
 	 */
 	public String getPrediction() {
+		if (_instance.classAttribute().isNumeric()) {
+			return Double.toString(_confidence);
+		}
 		return _prediction;
 	}
 

@@ -50,7 +50,7 @@
             "onlyPosNominal"    :   true 
         },
 
-        "writeToMongoDB"  : false,
+        "writeToMongoDB"  : true,
 
         "writeToFile"  : true
     },
@@ -59,7 +59,7 @@
     {
         "hostname"              :   "localhost",
         "port"                  :   27017,
-        "database"              :   "test",
+        "database"              :   "stock",
         "configCollection"      :   "config",
         "modelCollection"       :   "experiments",
         "predictionCollection"  :   "predictions"

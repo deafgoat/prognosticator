@@ -234,8 +234,12 @@ public final class AppClassifier {
 			// writing ALL predictions to database
 			if (_config._writeToMongoDB) {
 				result = new HashMap<String, String>();
-				result.put("confidence", prediction.getConfidence().toString());
-				result.put(_config._classValue, predicted);
+				if (_testInstances.classAttribute().isNumeric()) {
+					result.put("confidence", "");
+				} else {
+					result.put("confidence", prediction.getConfidence().toString());
+				}
+				result.put(_config._classValue, prediction.getPrediction());
 				predictions.add(result);
 			}
 		}
@@ -251,7 +255,7 @@ public final class AppClassifier {
 			
 			BufferedWriter writer = new BufferedWriter(new FileWriter(_config._predictionFile));
 			String value = null;
-			double confidence = 0;
+			double confidence = 0.0;
 			int count = 0;
 			int index = 0;
 			for (Prediction entry : predictionList) {
@@ -260,7 +264,11 @@ public final class AppClassifier {
 				index = entry.getIndex();
 				if (count < _config._maxCount) {
 					if (confidence >= _config._minProb) {
-						writer.write(index + _delimeter + confidence + _delimeter + value + "\n");
+						if (_testInstances.classAttribute().isNumeric()) {
+							writer.write(index + _delimeter + value + "\n");
+						} else {
+							writer.write(index + _delimeter + confidence + _delimeter + value + "\n");
+						}
 						count += 1;
 					}
 				} else {
