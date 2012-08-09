@@ -258,12 +258,9 @@ public final class AppClassifier {
 				confidence = entry.getConfidence();
 				value = entry.getPrediction();
 				index = entry.getIndex();
-				if (confidence == 0.0) {
-					_logger.debug("No confidence distribution for " + _config._classifier);
-				}
 				if (count < _config._maxCount) {
 					if (confidence >= _config._minProb) {
-						writer.write(index + _delimeter + confidence + _delimeter + value + "\t\n");
+						writer.write(index + _delimeter + confidence + _delimeter + value + "\n");
 						count += 1;
 					}
 				} else {

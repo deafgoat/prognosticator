@@ -30,15 +30,10 @@ public final class Prediction implements Comparable<Prediction> {
 
 	@Override
 	public int compareTo(Prediction pred) {
-	    double maximum = _distribution[0];
-	    int index = 0;
-	    for (int i = 1; i < _distribution.length; i++) {
-	        if (_distribution[i] > maximum) {
-	            maximum = _distribution[i];
-	            index = i;
-	        }
-	    }
-	    return (_distribution[index] < pred._distribution[index] ? -1 : (_distribution[index] == pred._distribution[index] ? 0 : 1));
+		if (pred._instance.classAttribute().isNumeric()) {
+			return 0;
+		}
+	    return (_confidence < pred._confidence ? -1 : (_confidence == pred._confidence ? 0 : 1));
 	}
 
 	/**
@@ -89,6 +84,7 @@ public final class Prediction implements Comparable<Prediction> {
 		StringBuilder sb = new StringBuilder();
 		sb.append(_instanceIndex + _delimeter);
 		sb.append(_confidence + _delimeter);
+		sb.append(_prediction + _delimeter);
 		return sb.toString();
 	}
 	
@@ -101,7 +97,7 @@ public final class Prediction implements Comparable<Prediction> {
 		int location = 0;
 		location = _attributeIndex.get(attribute);
 		sb.append(_instance.toString(location) + _delimeter);
-		sb.append(_distribution[0] > _distribution[1] ? _distribution[0] + _delimeter : _distribution[1] + _delimeter);
+		sb.append(_confidence + _delimeter);
 		return sb.toString();
 	}
 

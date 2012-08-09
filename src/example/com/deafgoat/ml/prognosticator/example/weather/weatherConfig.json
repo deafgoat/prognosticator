@@ -1,7 +1,7 @@
 {
     "name"  :   "weather-configuration",
 
-    "dumpARFF"    :   "dump/weather-dump.arff",
+    "dumpARFF"    :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather-dump.arff",
 
     "data":
     {
@@ -27,7 +27,7 @@
         "model":
         {
             "classifier"    :   "LogitBoost",
-            "outputModel"   :   "dump/classifier.model"
+            "outputModel"   :   "src/example/com/deafgoat/ml/prognosticator/example/weather/classifier.model"
         },
 
         "crossValidation":
@@ -39,15 +39,15 @@
 
         "classify":
         {
-            "testARFF"     :   "dump/weather-test.arff",
-            "trainingARFF" :   "dump/weather-training.arff"
+            "testARFF"     :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather-test.arff",
+            "trainingARFF" :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather-training.arff"
         },
         
         "prediction":
         {
             "maxCount"          :   0,
             "minProb"           :   0,
-            "file"              :   "dump/weather.tsv",
+            "file"              :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather-tomorrow-predictions.csv",
             "onlyPosNominal"    :   false
         },
 
@@ -68,7 +68,7 @@
 
     "dump":
     {
-        "file"                  :   "dump/weather.csv",
+        "file"                  :   "src/example/com/deafgoat/ml/prognosticator/example/weather/weather.csv",
 
         "attributes":
         [ 
