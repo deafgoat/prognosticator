@@ -15,10 +15,10 @@
 
     "errorAnalysis":
     {
-        "truePositives"  :   "tp.txt",
-        "trueNegatives"  :   "tn.txt",
-        "falsePositives" :   "fp.txt",
-        "falseNegatives" :   "fn.txt"
+        "truePositives"  :   "src/example/com/deafgoat/ml/prognosticator/example/weather/tp.txt",
+        "trueNegatives"  :   "src/example/com/deafgoat/ml/prognosticator/example/weather/tn.txt",
+        "falsePositives" :   "src/example/com/deafgoat/ml/prognosticator/example/weather/fp.txt",
+        "falseNegatives" :   "src/example/com/deafgoat/ml/prognosticator/example/weather/fn.txt"
     },
 
     "classifier":
