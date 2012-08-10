@@ -18,29 +18,18 @@ package com.deafgoat.ml.prognosticator.example.weather;
 
 // Prognosticator
 import com.deafgoat.ml.prognosticator.Experimenter;
-import com.deafgoat.ml.prognosticator.MongoExport;
-import com.deafgoat.ml.prognosticator.MongoImport;
 
 public class WeatherTomorrowPredictor {
-	static final String	_collection	= "configuration";
 	static final String	_config		= "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
-	static final String	_database	= "weather";
-	static final String	_host		= "localhost";
 	static Experimenter	_experimenter;
-	static String[]		_json;
-	static MongoExport	_mongoExport;
-	static MongoImport	_mongoImport;
 	
     /**
-     * This runs the training and analysis.
+     * This builds the model and does prediction
      */
     public static void main(final String [] pArgs) throws Exception {
-
-        // Create experimenter object.
+        // Create experimenter object using config file
     	_experimenter = new Experimenter(_config);
     		
-    	// Use configurations object in config file
-    	
         // Build the model.
         _experimenter.buildModel();
 

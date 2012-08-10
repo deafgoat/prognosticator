@@ -30,7 +30,7 @@ import org.junit.Test;
 public class CharterUnitTests {
 
 	static final String	_attribute	= "ChangeWindDirect";
-	static final String	_config		= "weatherConfig.json";
+	static final String	_config		= "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
 
 	@Test
 	public final void testCharter() throws Exception {
