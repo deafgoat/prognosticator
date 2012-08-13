@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  * ExperimenterTests.java 
- * Purpose: Unit tests for experimenter
+ * Purpose: Integration tests for experimenter
  * 
  */
 
@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class ExperimenterUnitTests {
+public class ExperimenterIntTests {
 
 	static final String	_config	= "weatherConfig.json";
 	static Experimenter	_experimenter;
