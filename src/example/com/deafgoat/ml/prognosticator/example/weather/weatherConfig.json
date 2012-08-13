@@ -27,7 +27,7 @@
         "model":
         {
             "classifier"    :   "LogitBoost",
-            "outputModel"   :   "src/example/com/deafgoat/ml/prognosticator/example/weather/classifier.model"
+            "outputModel"   :   "dump/classifier.model"
         },
 
         "crossValidation":
