@@ -148,7 +148,7 @@ limitations under the License.
                 <pathelement path="${dir.lib}/*.jar"/>
             </classpath>
             <classpath refid="classpath.all"/>
-            <!-- <formatter type="brief"/> -->
+            <formatter type="brief"/>
             <batchtest todir="">
                 <fileset dir="${dir.build}">
                     <include name="com/deafgoat/ml/prognosticator/*IntTests.class"/>
