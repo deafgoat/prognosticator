@@ -27,7 +27,7 @@ import java.io.File;
 import org.junit.Test;
 
 
-public class CharterUnitTests {
+public class CharterIntTests {
 
 	static final String	_attribute	= "ChangeWindDirect";
 	static final String	_config		= "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
