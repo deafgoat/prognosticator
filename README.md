@@ -90,7 +90,7 @@ Options marked `*` are required.
 
 ## License
 
-Copyright 2011, Wisdom Omuya.
+Copyright 2012, Wisdom Omuya.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
