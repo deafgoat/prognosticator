@@ -33,119 +33,131 @@ import weka.core.converters.ConverterUtils.DataSource;
  * collections with no nested fields.
  */
 public class InstancesReader {
-	
-	/**
-	 * @return all instances read from the data source
-	 */
-	public Instances getInstances() {
-		return _instances;
-	}
 
-	/**
-	 * Read from a .ARFF file
-	 * @throws IOException If the ARFF file can not be found
-	 * @return the set of instances read
-	 */
-	public Instances readFromARFF() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(_filename));
-		_instances = new Instances(reader);
-		reader.close();
-		return _instances;
-	}
+    /**
+     * @return all instances read from the data source
+     */
+    public Instances getInstances() {
+        return _instances;
+    }
 
-	/**
-	 * Read from a .CSV file
-	 * @throws IOException
-	 * @return the set of instances read
-	 */
-	public Instances readFromCSV() throws IOException {
-		CSVLoader loader = new CSVLoader();
-		loader.setSource(new File(_filename));
-		_instances = loader.getDataSet();
-		return _instances;
-	}
+    /**
+     * Read from a .ARFF file
+     * 
+     * @throws IOException
+     *             If the ARFF file can not be found
+     * @return the set of instances read
+     */
+    public Instances readFromARFF() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(_filename));
+        _instances = new Instances(reader);
+        reader.close();
+        return _instances;
+    }
 
-	/**
-	 * Read directly from a MongoDB collection
-	 * @param csv The CSV file to read into
-	 * @throws Exception If collection can not be read
-	 * @return the set of instances read
-	 */
-	public Instances readFromMongoDB(String csv) throws Exception {
-		_m2v = new Mongo2CSV(_host, _port, _db, _coll);
-		_m2v.setFields(_fields);
-		_m2v.writeCSV(csv);
-		_m2v.close();
-		_source = new DataSource(csv);
-		_instances = _source.getDataSet();
-		return _instances;
-	}
+    /**
+     * Read from a .CSV file
+     * 
+     * @throws IOException
+     * @return the set of instances read
+     */
+    public Instances readFromCSV() throws IOException {
+        CSVLoader loader = new CSVLoader();
+        loader.setSource(new File(_filename));
+        _instances = loader.getDataSet();
+        return _instances;
+    }
 
-	/**
-	 * working collection
-	 */
-	private String _coll;
-	
-	/**
-	 * working database
-	 */
-	private String _db;
-	
-	/**
-	 * working host
-	 */
-	private String _host;
-	
-	/**
-	 * working instances to read to 
-	 */
-	private Instances _instances;
-	
-	/**
-	 * working port
-	 */
-	private Integer _port;
+    /**
+     * Read directly from a MongoDB collection
+     * 
+     * @param csv
+     *            The CSV file to read into
+     * @throws Exception
+     *             If collection can not be read
+     * @return the set of instances read
+     */
+    public Instances readFromMongoDB(String csv) throws Exception {
+        _m2v = new Mongo2CSV(_host, _port, _db, _coll);
+        _m2v.setFields(_fields);
+        _m2v.writeCSV(csv);
+        _m2v.close();
+        _source = new DataSource(csv);
+        _instances = _source.getDataSet();
+        return _instances;
+    }
 
-	/**
-	 * sets of fields to read
-	 */
-	private String[] _fields;
+    /**
+     * working collection
+     */
+    private String _coll;
 
-	/**
-	 * the file to write to
-	 */
-	private String _filename;
+    /**
+     * working database
+     */
+    private String _db;
 
-	/**
-	 * Mongo2CSV handle
-	 */
-	private Mongo2CSV _m2v;
+    /**
+     * working host
+     */
+    private String _host;
 
-	/**
-	 * handler for data source
-	 */
-	private DataSource _source;
+    /**
+     * working instances to read to
+     */
+    private Instances _instances;
 
-	/**
-	 * @param filename The source file to read from
-	 */
-	public InstancesReader(String filename) {
-		_filename = filename;
-	}
+    /**
+     * working port
+     */
+    private Integer _port;
 
-	/**
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param db The name of the database
-	 * @param coll The name of the collection
-	 * @param fields The set of fields to read from the collection
-	 */
-	public InstancesReader(String host, Integer port, String db, String coll, String[] fields) {
-		_host = host;
-		_port = port;
-		_db = db;
-		_coll = coll;
-		_fields = fields;
-	}
+    /**
+     * sets of fields to read
+     */
+    private String[] _fields;
+
+    /**
+     * the file to write to
+     */
+    private String _filename;
+
+    /**
+     * Mongo2CSV handle
+     */
+    private Mongo2CSV _m2v;
+
+    /**
+     * handler for data source
+     */
+    private DataSource _source;
+
+    /**
+     * @param filename
+     *            The source file to read from
+     */
+    public InstancesReader(String filename) {
+        _filename = filename;
+    }
+
+    /**
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param db
+     *            The name of the database
+     * @param coll
+     *            The name of the collection
+     * @param fields
+     *            The set of fields to read from the collection
+     */
+    public InstancesReader(String host, Integer port, String db, String coll, String[] fields) {
+        _host = host;
+        _port = port;
+        _db = db;
+        _coll = coll;
+        _fields = fields;
+    }
 
 }

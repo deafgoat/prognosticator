@@ -29,22 +29,21 @@ import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ConfigUnitTests {
 
-	static final String	_config	= "weatherConfig.json";
-	static ConfigReader	_configReader;
+    static final String _config = "weatherConfig.json";
+    static ConfigReader _configReader;
 
-	@Test
-	public final void configTests() throws IOException, JSONException {
-		_configReader.readConfig();
-		assertTrue("Name mismatch!", _configReader._relation.equals("weather-configuration"));
-	}
+    @Test
+    public final void configTests() throws IOException, JSONException {
+        _configReader.readConfig();
+        assertTrue("Name mismatch!", _configReader._relation.equals("weather-configuration"));
+    }
 
-	@Before
-	public final void initializeConfig() throws IOException, JSONException {
-		_configReader = new ConfigReader(_config);
-		assertNotNull("Could not initialize ConfigReader", _configReader);
-	}
+    @Before
+    public final void initializeConfig() throws IOException, JSONException {
+        _configReader = new ConfigReader(_config);
+        assertNotNull("Could not initialize ConfigReader", _configReader);
+    }
 
 }

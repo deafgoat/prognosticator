@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import weka.core.Instance;
+
 // Weka
 
 /**
@@ -28,131 +29,142 @@ import weka.core.Instance;
  */
 public final class Prediction implements Comparable<Prediction> {
 
-	@Override
-	public int compareTo(Prediction pred) {
-		if (pred._instance.classAttribute().isNumeric()) {
-			return 0;
-		}
-	    return (_confidence > pred._confidence ? -1 : (_confidence == pred._confidence ? 0 : 1));
-	}
+    @Override
+    public int compareTo(Prediction pred) {
+        if (pred._instance.classAttribute().isNumeric()) {
+            return 0;
+        }
+        return (_confidence > pred._confidence ? -1 : (_confidence == pred._confidence ? 0 : 1));
+    }
 
-	/**
-	 * Generates a mapping for each of the instance's attributes (name) to their
-	 * index location
-	 * @return map of instance attribute name to location
-	 */
-	private HashMap<String, Integer> getAttributeMap() {
-		HashMap<String, Integer> attributeIndex = new HashMap<String, Integer>();
-		for (int i = 0; i < _instance.numAttributes(); i++) {
-			attributeIndex.put(_instance.dataset().attribute(i).name(), i);
-		}
-		return attributeIndex;
-	}
+    /**
+     * Generates a mapping for each of the instance's attributes (name) to their
+     * index location
+     * 
+     * @return map of instance attribute name to location
+     */
+    private HashMap<String, Integer> getAttributeMap() {
+        HashMap<String, Integer> attributeIndex = new HashMap<String, Integer>();
+        for (int i = 0; i < _instance.numAttributes(); i++) {
+            attributeIndex.put(_instance.dataset().attribute(i).name(), i);
+        }
+        return attributeIndex;
+    }
 
-	/**
-	 * Gets the confidence of the predicted class
-	 * @return predicted class confidence
-	 */
-	public Double getConfidence() {
-		double maximum = _distribution[0];
-	    for (int i = 1; i < _distribution.length; i++) {
-	        if (_distribution[i] > maximum) {
-	            maximum = _distribution[i];
-	        }
-	    }
-	    return maximum;
-	}
+    /**
+     * Gets the confidence of the predicted class
+     * 
+     * @return predicted class confidence
+     */
+    public Double getConfidence() {
+        double maximum = _distribution[0];
+        for (int i = 1; i < _distribution.length; i++) {
+            if (_distribution[i] > maximum) {
+                maximum = _distribution[i];
+            }
+        }
+        return maximum;
+    }
 
-	/**
-	 * Gets the index of the predicted instance
-	 * @return the predicted instance index
-	 */
-	public int getIndex() {
-		return _instanceIndex;
-	}
-	
-	/**
-	 * Gets the confidence of the all predicted classes
-	 * @return class confidence distribution
-	 */
-	public String getPrediction() {
-		if (_instance.classAttribute().isNumeric()) {
-			return Double.toString(_confidence);
-		}
-		return _prediction;
-	}
+    /**
+     * Gets the index of the predicted instance
+     * 
+     * @return the predicted instance index
+     */
+    public int getIndex() {
+        return _instanceIndex;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(_instanceIndex + _delimeter);
-		sb.append(_confidence + _delimeter);
-		sb.append(_prediction + _delimeter);
-		return sb.toString();
-	}
-	
-	/**
-	 * Gets the value of attribute in the instance
-	 * @return tab-delimited attribute distribution
-	 */
-	public String attributeDistribution(String attribute) {
-		StringBuilder sb = new StringBuilder();
-		int location = 0;
-		location = _attributeIndex.get(attribute);
-		sb.append(_instance.toString(location) + _delimeter);
-		sb.append(_confidence + _delimeter);
-		return sb.toString();
-	}
+    /**
+     * Gets the confidence of the all predicted classes
+     * 
+     * @return class confidence distribution
+     */
+    public String getPrediction() {
+        if (_instance.classAttribute().isNumeric()) {
+            return Double.toString(_confidence);
+        }
+        return _prediction;
+    }
 
-	/**
-	 * the delimeter for prediction file
-	 */
-	private static final String	_delimeter	= "\t";
-	
-	/** 
-	 * mapping of attribute name to location
-	 */
-	private HashMap<String, Integer> _attributeIndex;
-	
-	/**
-	 * for NaiveBayes, holds the probability distribution
-	 */
-	private double[] _distribution;
-	
-	/**
-	 * the instance to be predicted 
-	 */
-	private Instance _instance;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(_instanceIndex + _delimeter);
+        sb.append(_confidence + _delimeter);
+        sb.append(_prediction + _delimeter);
+        return sb.toString();
+    }
 
-	/** 
-	 * the predicted class of the instance
-	 */
-	private String _prediction;
+    /**
+     * Gets the value of attribute in the instance
+     * 
+     * @return tab-delimited attribute distribution
+     */
+    public String attributeDistribution(String attribute) {
+        StringBuilder sb = new StringBuilder();
+        int location = 0;
+        location = _attributeIndex.get(attribute);
+        sb.append(_instance.toString(location) + _delimeter);
+        sb.append(_confidence + _delimeter);
+        return sb.toString();
+    }
 
-	/** 
-	 * the index of the predicted instance
-	 */
-	private int _instanceIndex;
-	
-	/** 
-	 * the prediction confidence
-	 */
-	private double _confidence;
+    /**
+     * the delimeter for prediction file
+     */
+    private static final String _delimeter = "\t";
 
-	/**
-	 * Constructor for instance prediction
-	 * @param instanceIndex The instance index in dump
-	 * @param prediction The classifier prediction
-	 * @param distribution The prediction confidence distribution
-	 * @param instance The test instance
-	 * @throws IOException
-	 */
-	public Prediction(int instanceIndex, String prediction, double[] distribution, Instance instance) throws IOException {
-		_prediction = prediction;
-		_distribution = distribution;
-		_instance = instance;
-		_instanceIndex = instanceIndex;
-		_attributeIndex = getAttributeMap();
-		_confidence = getConfidence();
-	}
+    /**
+     * mapping of attribute name to location
+     */
+    private HashMap<String, Integer> _attributeIndex;
+
+    /**
+     * for NaiveBayes, holds the probability distribution
+     */
+    private double[] _distribution;
+
+    /**
+     * the instance to be predicted
+     */
+    private Instance _instance;
+
+    /**
+     * the predicted class of the instance
+     */
+    private String _prediction;
+
+    /**
+     * the index of the predicted instance
+     */
+    private int _instanceIndex;
+
+    /**
+     * the prediction confidence
+     */
+    private double _confidence;
+
+    /**
+     * Constructor for instance prediction
+     * 
+     * @param instanceIndex
+     *            The instance index in dump
+     * @param prediction
+     *            The classifier prediction
+     * @param distribution
+     *            The prediction confidence distribution
+     * @param instance
+     *            The test instance
+     * @throws IOException
+     */
+    public Prediction(int instanceIndex, String prediction, double[] distribution, Instance instance)
+            throws IOException {
+        _prediction = prediction;
+        _distribution = distribution;
+        _instance = instance;
+        _instanceIndex = instanceIndex;
+        _attributeIndex = getAttributeMap();
+        _confidence = getConfidence();
+    }
 }

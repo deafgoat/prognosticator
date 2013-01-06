@@ -37,14 +37,14 @@ public class AppleStockPricePredictor {
     /**
      * This runs the training and analysis.
      */
-    public static void main(final String [] pArgs) throws Exception {
+    public static void main(final String[] pArgs) throws Exception {
 
         final ConfigReader config = new ConfigReader(CONFIG_FILE);
 
-	    final ARFFWriter testArffWriter = new ARFFWriter(config, TEST_CSV, TEST_ARFF);
+        final ARFFWriter testArffWriter = new ARFFWriter(config, TEST_CSV, TEST_ARFF);
         testArffWriter.writeARFF();
 
-	    final ARFFWriter trainingArffWriter = new ARFFWriter(config, TRAINING_CSV, TRAINING_ARFF);
+        final ARFFWriter trainingArffWriter = new ARFFWriter(config, TRAINING_CSV, TRAINING_ARFF);
         trainingArffWriter.writeARFF();
 
         // Create experimenter object.
@@ -58,4 +58,3 @@ public class AppleStockPricePredictor {
 
     }
 }
-

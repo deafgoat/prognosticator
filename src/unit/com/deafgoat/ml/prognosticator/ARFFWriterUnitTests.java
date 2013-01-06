@@ -27,30 +27,29 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ARFFWriterUnitTests {
 
-	static final String	_config		= "weatherConfig.json";
-	static ARFFWriter	_dump;
-	static final String	_inputCsv	= "weather.csv";
-	static final String	_targetArff	= "weather-dump.arff";
+    static final String _config = "weatherConfig.json";
+    static ARFFWriter _dump;
+    static final String _inputCsv = "weather.csv";
+    static final String _targetArff = "weather-dump.arff";
 
-	@Before
-	public final void testArffCreation() throws Exception {
-		_dump = new ARFFWriter(new ConfigReader(_config), _inputCsv, _targetArff);
-	}
+    @Before
+    public final void testArffCreation() throws Exception {
+        _dump = new ARFFWriter(new ConfigReader(_config), _inputCsv, _targetArff);
+    }
 
-	/**
-	 * This will test that the ARFF file is actually created.
-	 */
-	@Test
-	public final void testArffWrite() throws Exception {
-		File arff = new File(_targetArff);
-		if (arff.exists()) {
-			assertTrue("ARFF could not be deleted", arff.delete());
-		}
-		_dump.writeARFF();
-		assertTrue("ARFF not written!", arff.exists());
+    /**
+     * This will test that the ARFF file is actually created.
+     */
+    @Test
+    public final void testArffWrite() throws Exception {
+        File arff = new File(_targetArff);
+        if (arff.exists()) {
+            assertTrue("ARFF could not be deleted", arff.delete());
+        }
+        _dump.writeARFF();
+        assertTrue("ARFF not written!", arff.exists());
 
-	}
+    }
 }

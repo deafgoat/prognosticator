@@ -37,116 +37,176 @@ import com.mongodb.util.JSON;
  * Simple JSON to MongoDB collection writer.
  */
 public class MongoExport extends MongoMgr {
-	
-	/**
-	 * Writes the JSON configuration(s) to a MongoDB collection
-	 * @throws FileNotFoundException If the configuration file(s) can not be found
-	 * @throws IOException If the configuration file(s) can not be read
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public void writeJSON() throws FileNotFoundException, IOException, JSONException {
-		BasicDBObject query = new BasicDBObject();
-		for (JSONObject configJSON : _configJSONs) {
-			query.put("name", configJSON.getString("name"));
-			// so we don't have duplicates
-			_collection.update(query, (DBObject) JSON.parse(configJSON.toString()), true, false);
-		}
-	}
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(JSONObject json[], String host, Integer port) throws FileNotFoundException, IOException, JSONException {
-		super(host, port);
-		_configJSONs = json.clone();
-	}
 
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(JSONObject json[], String host, Integer port, String database) throws FileNotFoundException, IOException, JSONException {
-		super(host, port, database);
-		_configJSONs = json.clone();
-	}
+    /**
+     * Writes the JSON configuration(s) to a MongoDB collection
+     * 
+     * @throws FileNotFoundException
+     *             If the configuration file(s) can not be found
+     * @throws IOException
+     *             If the configuration file(s) can not be read
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public void writeJSON() throws FileNotFoundException, IOException, JSONException {
+        BasicDBObject query = new BasicDBObject();
+        for (JSONObject configJSON : _configJSONs) {
+            query.put("name", configJSON.getString("name"));
+            // so we don't have duplicates
+            _collection.update(query, (DBObject) JSON.parse(configJSON.toString()), true, false);
+        }
+    }
 
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @param collection The name of the collection
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(JSONObject json[], String host, Integer port, String database, String collection) throws FileNotFoundException, IOException, JSONException {
-		super(host, port, database, collection);
-		_configJSONs = json.clone();
-	}
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(JSONObject json[], String host, Integer port) throws FileNotFoundException, IOException,
+            JSONException {
+        super(host, port);
+        _configJSONs = json.clone();
+    }
 
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(String json[], String host, Integer port) throws FileNotFoundException, IOException, JSONException {
-		super(host, port);
-		_configJSONs = new JSONObject[json.length];
-		for (int i = 0; i < json.length; i++) {
-			_configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
-		}
-	}
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(JSONObject json[], String host, Integer port, String database) throws FileNotFoundException,
+            IOException, JSONException {
+        super(host, port, database);
+        _configJSONs = json.clone();
+    }
 
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(String json[], String host, Integer port, String database) throws FileNotFoundException, IOException, JSONException {
-		super(host, port, database);
-		_configJSONs = new JSONObject[json.length];
-		for (int i = 0; i < json.length; i++) {
-			_configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
-		}
-	}
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @param collection
+     *            The name of the collection
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(JSONObject json[], String host, Integer port, String database, String collection)
+            throws FileNotFoundException, IOException, JSONException {
+        super(host, port, database, collection);
+        _configJSONs = json.clone();
+    }
 
-	/**
-	 * @param json The set of JSON configuration(s) to write to the database
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @param collection The name of the collection
-	 * @throws IOException If it can not read configuration file(s)
-	 * @throws FileNotFoundException If it can not find configuration file(s)
-	 * @throws JSONException If the configuration file(s) can not be converted to a JSONObject
-	 */
-	public MongoExport(String json[], String host, Integer port, String database, String collection) throws FileNotFoundException, IOException, JSONException {
-		super(host, port, database, collection);
-		_configJSONs = new JSONObject[json.length];
-		for (int i = 0; i < json.length; i++) {
-			_configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
-		}
-	}
-	
-	/**
-	 * holds the configuration JSONobject objecdts
-	 */
-	private JSONObject[] _configJSONs;
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(String json[], String host, Integer port) throws FileNotFoundException, IOException,
+            JSONException {
+        super(host, port);
+        _configJSONs = new JSONObject[json.length];
+        for (int i = 0; i < json.length; i++) {
+            _configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
+        }
+    }
+
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(String json[], String host, Integer port, String database) throws FileNotFoundException,
+            IOException, JSONException {
+        super(host, port, database);
+        _configJSONs = new JSONObject[json.length];
+        for (int i = 0; i < json.length; i++) {
+            _configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
+        }
+    }
+
+    /**
+     * @param json
+     *            The set of JSON configuration(s) to write to the database
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @param collection
+     *            The name of the collection
+     * @throws IOException
+     *             If it can not read configuration file(s)
+     * @throws FileNotFoundException
+     *             If it can not find configuration file(s)
+     * @throws JSONException
+     *             If the configuration file(s) can not be converted to a
+     *             JSONObject
+     */
+    public MongoExport(String json[], String host, Integer port, String database, String collection)
+            throws FileNotFoundException, IOException, JSONException {
+        super(host, port, database, collection);
+        _configJSONs = new JSONObject[json.length];
+        for (int i = 0; i < json.length; i++) {
+            _configJSONs[i] = new JSONObject(IOUtils.toString(new FileReader(json[i])));
+        }
+    }
+
+    /**
+     * holds the configuration JSONobject objecdts
+     */
+    private JSONObject[] _configJSONs;
 }

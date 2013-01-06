@@ -20,21 +20,21 @@ package com.deafgoat.ml.prognosticator.example.weather;
 import com.deafgoat.ml.prognosticator.Experimenter;
 
 public class WeatherTomorrowPredictor {
-	static final String	_config		= "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
-	static Experimenter	_experimenter;
-	
+    static final String _config = "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
+    static Experimenter _experimenter;
+
     /**
      * This builds the model and does prediction
      */
-    public static void main(final String [] pArgs) throws Exception {
+    public static void main(final String[] pArgs) throws Exception {
         // Create experimenter object using config file
-    	_experimenter = new Experimenter(_config);
-    		
+        _experimenter = new Experimenter(_config);
+
         // Build the model.
         _experimenter.buildModel();
 
         // Run the prediction
         _experimenter.predict();
     }
-   
+
 }

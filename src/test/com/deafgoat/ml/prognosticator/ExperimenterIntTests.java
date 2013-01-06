@@ -27,34 +27,33 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ExperimenterIntTests {
 
-	static final String	_config	= "weatherConfig.json";
-	static Experimenter	_experimenter;
+    static final String _config = "weatherConfig.json";
+    static Experimenter _experimenter;
 
-	@Before
-	public final void initialize() throws Exception {
-		_experimenter = new Experimenter("weatherConfig.json");
-	}
+    @Before
+    public final void initialize() throws Exception {
+        _experimenter = new Experimenter("weatherConfig.json");
+    }
 
-	@Test
-	public final void testBuildModel() throws Exception {
-		File model = new File(_experimenter._config._modelFile);
-		if (model.exists()) {
-			assertTrue("Model could not be deleted", model.delete());
-		}
-		_experimenter.buildModel();
-		assertTrue("Model not written!", model.exists());
-	}
+    @Test
+    public final void testBuildModel() throws Exception {
+        File model = new File(_experimenter._config._modelFile);
+        if (model.exists()) {
+            assertTrue("Model could not be deleted", model.delete());
+        }
+        _experimenter.buildModel();
+        assertTrue("Model not written!", model.exists());
+    }
 
-	@Test
-	public final void testPrediction() throws Exception {
-		File prediction = new File(_experimenter._config._predictionFile);
-		if (prediction.exists()) {
-			assertTrue("Prediction could not be deleted", prediction.delete());
-		}
-		_experimenter.predict();
-		assertTrue("Prediction not written!", prediction.exists());
-	}
+    @Test
+    public final void testPrediction() throws Exception {
+        File prediction = new File(_experimenter._config._predictionFile);
+        if (prediction.exists()) {
+            assertTrue("Prediction could not be deleted", prediction.delete());
+        }
+        _experimenter.predict();
+        assertTrue("Prediction not written!", prediction.exists());
+    }
 }

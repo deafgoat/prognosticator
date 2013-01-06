@@ -38,308 +38,323 @@ import org.json.JSONObject;
  */
 public final class ConfigReader {
 
-	/**
-	 * Reads the configuration file
-	 * @throws IOException If configuration file can not be found
-	 * @throws JSONException If configuration file can not be parsed
-	 */
-	public void readConfig() throws IOException, JSONException {
-		if (_logger.isDebugEnabled()) {
-			_logger.debug("Reading application configuration");
-		}
-		// Read classification configurations
-		readGlobalConfig();
-		// Set input/output file parameters
-		_dumpARFF = _configJSON.getString("dumpARFF");
-		// Set data configurations
-		JSONObject _data = _configJSON.getJSONObject("data");
-		_classValue = _data.getString("classValue");
-		_dateFormat = _data.getString("dateFormat");
-		_positiveClassValue = _data.getString("positiveClassValue");
-		_negativeClassValue = _data.getString("negativeClassValue");
-		_positiveClassWeight = Integer.parseInt(_data.getString("positiveClassWeight"));
-		_negativeClassWeight = Integer.parseInt(_data.getString("negativeClassWeight"));
-		Attributes attribute = null;
-		JSONObject rec = null;
-		// Read in top-level table dump configuration
-		JSONObject data = _configJSON.getJSONObject("dump");
-		_dumpFile = data.getString("file");
-		_attributes = new HashMap<String, ArrayList<Attributes>>();
-		_attributes.put(_dumpFile, new ArrayList<Attributes>());
-		JSONArray array = data.getJSONArray("attributes");
-		for (int i = 0; i < array.length(); i++) {
-			rec = array.getJSONObject(i);
-			attribute = Attributes.createAttribute(rec.getString("rawAttributeName"), rec.getString("attributeName"), rec.getString("attributeType"), rec.getBoolean("include")).getObject();
-			_attributes.get(_dumpFile).add(attribute);
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Read attribute " + attribute.getRawAttributeName());
-			}
-		}
-		if (_logger.isDebugEnabled()) {
-			_logger.debug("Read " + _attributes.get(_dumpFile).size() + " attribute(s) for " + _dumpFile);
-		}
-	}
+    /**
+     * Reads the configuration file
+     * 
+     * @throws IOException
+     *             If configuration file can not be found
+     * @throws JSONException
+     *             If configuration file can not be parsed
+     */
+    public void readConfig() throws IOException, JSONException {
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Reading application configuration");
+        }
+        // Read classification configurations
+        readGlobalConfig();
+        // Set input/output file parameters
+        _dumpARFF = _configJSON.getString("dumpARFF");
+        // Set data configurations
+        JSONObject _data = _configJSON.getJSONObject("data");
+        _classValue = _data.getString("classValue");
+        _dateFormat = _data.getString("dateFormat");
+        _positiveClassValue = _data.getString("positiveClassValue");
+        _negativeClassValue = _data.getString("negativeClassValue");
+        _positiveClassWeight = Integer.parseInt(_data.getString("positiveClassWeight"));
+        _negativeClassWeight = Integer.parseInt(_data.getString("negativeClassWeight"));
+        Attributes attribute = null;
+        JSONObject rec = null;
+        // Read in top-level table dump configuration
+        JSONObject data = _configJSON.getJSONObject("dump");
+        _dumpFile = data.getString("file");
+        _attributes = new HashMap<String, ArrayList<Attributes>>();
+        _attributes.put(_dumpFile, new ArrayList<Attributes>());
+        JSONArray array = data.getJSONArray("attributes");
+        for (int i = 0; i < array.length(); i++) {
+            rec = array.getJSONObject(i);
+            attribute = Attributes.createAttribute(rec.getString("rawAttributeName"), rec.getString("attributeName"),
+                    rec.getString("attributeType"), rec.getBoolean("include")).getObject();
+            _attributes.get(_dumpFile).add(attribute);
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Read attribute " + attribute.getRawAttributeName());
+            }
+        }
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Read " + _attributes.get(_dumpFile).size() + " attribute(s) for " + _dumpFile);
+        }
+    }
 
-	/**
-	 * Reads classifier-pertinent information
-	 * @throws IOException If configuration file can not be found
-	 * @throws JSONException If configuration file can not be parsed
-	 */
-	private void readGlobalConfig() throws IOException, JSONException {
-		if (_logger.isDebugEnabled()) {
-			_logger.debug("Reading classifier configuration");
-		}
-		JSONObject classifier = _configJSON.getJSONObject("classifier");
-		JSONObject prediction = classifier.getJSONObject("prediction");
-		JSONObject errorAnalysis = _configJSON.getJSONObject("errorAnalysis");
-		JSONObject crossValidation = classifier.getJSONObject("crossValidation");
-		JSONObject classify = classifier.getJSONObject("classify");
-		JSONObject model = classifier.getJSONObject("model");
-		_relation = _configJSON.getString("name");
-		_testARFF = classify.getString("testARFF");
-		_modelFile = model.getString("outputModel");
-		_classifier = model.getString("classifier");
-		_dumpARFF = _configJSON.getString("dumpARFF");
-		_folds = crossValidation.getString("numFolds");
-		_trainingARFF = classify.getString("trainingARFF");
-		_writeToFile = classifier.getBoolean("writeToFile");
-		_writeToMongoDB = classifier.getBoolean("writeToMongoDB");
-		_truePositives = errorAnalysis.getString("truePositives");
-		_trueNegatives = errorAnalysis.getString("trueNegatives");
-		_falsePositives = errorAnalysis.getString("falsePositives");
-		_falseNegatives = errorAnalysis.getString("falseNegatives");
-		_maxCount = prediction.getInt("maxCount");
-		
-		if (_writeToMongoDB) {
-			JSONObject mongoDB = _configJSON.getJSONObject("mongoDB");
-			_port = mongoDB.getInt("port");
-			_db = mongoDB.getString("database");
-			_host = mongoDB.getString("hostname");
-			_modelCollection = mongoDB.getString("modelCollection");
-			_configCollection = mongoDB.getString("configCollection");
-			_predictionCollection = mongoDB.getString("predictionCollection");
-		}
-		
-		_predictionFile = prediction.getString("file");
-		if (_maxCount == 0) {
-			_maxCount = Integer.MAX_VALUE;
-		}
-		_minProb = Double.parseDouble(prediction.getString("minProb"));
-		_onlyPosNominal = prediction.getBoolean("onlyPosNominal");
-		JSONObject _data = _configJSON.getJSONObject("data");
-		_classValue = _data.getString("classValue");
-	}
+    /**
+     * Reads classifier-pertinent information
+     * 
+     * @throws IOException
+     *             If configuration file can not be found
+     * @throws JSONException
+     *             If configuration file can not be parsed
+     */
+    private void readGlobalConfig() throws IOException, JSONException {
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Reading classifier configuration");
+        }
+        JSONObject classifier = _configJSON.getJSONObject("classifier");
+        JSONObject prediction = classifier.getJSONObject("prediction");
+        JSONObject errorAnalysis = _configJSON.getJSONObject("errorAnalysis");
+        JSONObject crossValidation = classifier.getJSONObject("crossValidation");
+        JSONObject classify = classifier.getJSONObject("classify");
+        JSONObject model = classifier.getJSONObject("model");
+        _relation = _configJSON.getString("name");
+        _testARFF = classify.getString("testARFF");
+        _modelFile = model.getString("outputModel");
+        _classifier = model.getString("classifier");
+        _dumpARFF = _configJSON.getString("dumpARFF");
+        _folds = crossValidation.getString("numFolds");
+        _trainingARFF = classify.getString("trainingARFF");
+        _writeToFile = classifier.getBoolean("writeToFile");
+        _writeToMongoDB = classifier.getBoolean("writeToMongoDB");
+        _truePositives = errorAnalysis.getString("truePositives");
+        _trueNegatives = errorAnalysis.getString("trueNegatives");
+        _falsePositives = errorAnalysis.getString("falsePositives");
+        _falseNegatives = errorAnalysis.getString("falseNegatives");
+        _maxCount = prediction.getInt("maxCount");
 
-	/**
-	 * Sets the attribute hash to allow for efficient retrieval
-	 */
-	public void setAttributeMap() {
-		_attributeMap = new HashMap<String, HashMap<String, Integer>>();
-		for (String attributeDump : _attributes.keySet()) {
-			_attributeMap.put(attributeDump, new HashMap<String, Integer>());
-			for (int i = 0; i < _attributes.get(attributeDump).size(); i++) {
-				_attributeMap.get(attributeDump).put(_attributes.get(attributeDump).get(i).getAttributeName().trim().toLowerCase(), i);
-			}
-		}
-	}
+        if (_writeToMongoDB) {
+            JSONObject mongoDB = _configJSON.getJSONObject("mongoDB");
+            _port = mongoDB.getInt("port");
+            _db = mongoDB.getString("database");
+            _host = mongoDB.getString("hostname");
+            _modelCollection = mongoDB.getString("modelCollection");
+            _configCollection = mongoDB.getString("configCollection");
+            _predictionCollection = mongoDB.getString("predictionCollection");
+        }
 
-	/**
-	 * contains a mapping of all dumps to their name/location
-	 */
-	public Map<String, HashMap<String, Integer>> _attributeMap;
+        _predictionFile = prediction.getString("file");
+        if (_maxCount == 0) {
+            _maxCount = Integer.MAX_VALUE;
+        }
+        _minProb = Double.parseDouble(prediction.getString("minProb"));
+        _onlyPosNominal = prediction.getBoolean("onlyPosNominal");
+        JSONObject _data = _configJSON.getJSONObject("data");
+        _classValue = _data.getString("classValue");
+    }
 
-	/**
-	 * the set of all attributes specified in configuration
-	 */
-	public Map<String, ArrayList<Attributes>> _attributes;
+    /**
+     * Sets the attribute hash to allow for efficient retrieval
+     */
+    public void setAttributeMap() {
+        _attributeMap = new HashMap<String, HashMap<String, Integer>>();
+        for (String attributeDump : _attributes.keySet()) {
+            _attributeMap.put(attributeDump, new HashMap<String, Integer>());
+            for (int i = 0; i < _attributes.get(attributeDump).size(); i++) {
+                _attributeMap.get(attributeDump).put(
+                        _attributes.get(attributeDump).get(i).getAttributeName().trim().toLowerCase(), i);
+            }
+        }
+    }
 
-	/**
-	 * the name of the classification algorithm to use
-	 */
-	public String _classifier;
+    /**
+     * contains a mapping of all dumps to their name/location
+     */
+    public Map<String, HashMap<String, Integer>> _attributeMap;
 
-	/**
-	 * the attribute to predict
-	 */
-	public String _classValue;
+    /**
+     * the set of all attributes specified in configuration
+     */
+    public Map<String, ArrayList<Attributes>> _attributes;
 
-	/**
-	 * the application configuration collection
-	 */
-	public String _configCollection;
+    /**
+     * the name of the classification algorithm to use
+     */
+    public String _classifier;
 
-	/**
-	 * the name of the configuration file
-	 */
-	public String _configFile;
+    /**
+     * the attribute to predict
+     */
+    public String _classValue;
 
-	/**
-	 * an object to hold the read in JSON configuration
-	 */
-	public JSONObject _configJSON;
+    /**
+     * the application configuration collection
+     */
+    public String _configCollection;
 
-	/**
-	 * the input data date format
-	 */
-	public String _dateFormat;
+    /**
+     * the name of the configuration file
+     */
+    public String _configFile;
 
-	/**
-	 * the application database
-	 */
-	public String _db;
+    /**
+     * an object to hold the read in JSON configuration
+     */
+    public JSONObject _configJSON;
 
-	/**
-	 * where to save the converted CSV
-	 */
-	public String _dumpARFF;
+    /**
+     * the input data date format
+     */
+    public String _dateFormat;
 
-	/**
-	 * the name of the file containing the CSV dump
-	 */
-	public String _dumpFile;
+    /**
+     * the application database
+     */
+    public String _db;
 
-	/**
-	 * where to store predictions for false negatives
-	 */
-	public String _falseNegatives;
+    /**
+     * where to save the converted CSV
+     */
+    public String _dumpARFF;
 
-	/**
-	 * where to store predictions for false positives
-	 */
-	public String _falsePositives;
+    /**
+     * the name of the file containing the CSV dump
+     */
+    public String _dumpFile;
 
-	/**
-	 * number of folds for cross-validation
-	 */
-	public String _folds;
+    /**
+     * where to store predictions for false negatives
+     */
+    public String _falseNegatives;
 
-	/**
-	 * the database hostname
-	 */
-	public String _host;
+    /**
+     * where to store predictions for false positives
+     */
+    public String _falsePositives;
 
-	/**
-	 * a handle to the logging object
-	 */
-	private Logger _logger;
+    /**
+     * number of folds for cross-validation
+     */
+    public String _folds;
 
-	/**
-	 * maximum number of predictions to output
-	 */
-	public int _maxCount;
+    /**
+     * the database hostname
+     */
+    public String _host;
 
-	/**
-	 * minimum confidence threshold for predictions
-	 */
-	public double _minProb;
+    /**
+     * a handle to the logging object
+     */
+    private Logger _logger;
 
-	/**
-	 * the application experiment models/results collection
-	 */
-	public String _modelCollection;
+    /**
+     * maximum number of predictions to output
+     */
+    public int _maxCount;
 
-	/**
-	 * where to save the model file
-	 */
-	public String _modelFile;
+    /**
+     * minimum confidence threshold for predictions
+     */
+    public double _minProb;
 
-	/**
-	 * the value of the negative class
-	 */
-	public String _negativeClassValue;
+    /**
+     * the application experiment models/results collection
+     */
+    public String _modelCollection;
 
-	/**
-	 * the weight associated with the negative class(es)
-	 */
-	public int _negativeClassWeight;
+    /**
+     * where to save the model file
+     */
+    public String _modelFile;
 
-	/**
-	 * flag indicating whether to write only positive nominal class
-	 */
-	public boolean _onlyPosNominal;
-	
-	/**
-	 * the application database port
-	 */
-	public int _port;
+    /**
+     * the value of the negative class
+     */
+    public String _negativeClassValue;
 
-	/**
-	 * the value of the positive class
-	 */
-	public String _positiveClassValue;
+    /**
+     * the weight associated with the negative class(es)
+     */
+    public int _negativeClassWeight;
 
-	/**
-	 * the weight associated with the positive class
-	 */
-	public int _positiveClassWeight;
+    /**
+     * flag indicating whether to write only positive nominal class
+     */
+    public boolean _onlyPosNominal;
 
-	/**
-	 * the application prediction collection
-	 */
-	public String _predictionCollection;
+    /**
+     * the application database port
+     */
+    public int _port;
 
-	/**
-	 * where to write predictions to
-	 */
-	public String _predictionFile;
+    /**
+     * the value of the positive class
+     */
+    public String _positiveClassValue;
 
-	/**
-	 * name of the relationship
-	 */
-	public String _relation;
+    /**
+     * the weight associated with the positive class
+     */
+    public int _positiveClassWeight;
 
-	/**
-	 * where to save the test portion of dump ARFF
-	 */
-	public String _testARFF;
+    /**
+     * the application prediction collection
+     */
+    public String _predictionCollection;
 
-	/**
-	 * where to save the training portion of dump ARFF
-	 */
-	public String _trainingARFF;
+    /**
+     * where to write predictions to
+     */
+    public String _predictionFile;
 
-	/**
-	 * where to store predictions for true negatives
-	 */
-	public String _trueNegatives;
+    /**
+     * name of the relationship
+     */
+    public String _relation;
 
-	/**
-	 * where to store predictions for true positives
-	 */
-	public String _truePositives;
+    /**
+     * where to save the test portion of dump ARFF
+     */
+    public String _testARFF;
 
-	/**
-	 * indicates if application should write model/results to file
-	 */
-	public boolean _writeToFile;
+    /**
+     * where to save the training portion of dump ARFF
+     */
+    public String _trainingARFF;
 
-	/**
-	 * indicates if application should write model/results to mongodb
-	 */
-	public boolean _writeToMongoDB;
-	
-	static final ClassLoader loader = ConfigReader.class.getClassLoader();
+    /**
+     * where to store predictions for true negatives
+     */
+    public String _trueNegatives;
 
-	/**
-	 * Constructor for MongoDB configuration JSON
-	 * @param json The JSON configuration object
-	 */
-	public ConfigReader(JSONObject json) {
-		_logger = Logger.getLogger(AppLogger.class.getName());
-		_configJSON = json;
-	}
+    /**
+     * where to store predictions for true positives
+     */
+    public String _truePositives;
 
-	/**
-	 * Constructor for configuration file
-	 * @param configFile The configuration file
-	 * @throws IOException If configuration file can not be found
-	 * @throws JSONException If configuration file can not be parsed
-	 */
-	public ConfigReader(String configFile) throws IOException, JSONException {
-		_logger = AppLogger.getLogger();
-		_configFile = configFile;
-		//	_configJSON = new JSONObject(loader.getResource(_configFile).toString());
-		_configJSON = new JSONObject(IOUtils.toString(new FileReader(_configFile)));
-	}
+    /**
+     * indicates if application should write model/results to file
+     */
+    public boolean _writeToFile;
+
+    /**
+     * indicates if application should write model/results to mongodb
+     */
+    public boolean _writeToMongoDB;
+
+    static final ClassLoader loader = ConfigReader.class.getClassLoader();
+
+    /**
+     * Constructor for MongoDB configuration JSON
+     * 
+     * @param json
+     *            The JSON configuration object
+     */
+    public ConfigReader(JSONObject json) {
+        _logger = Logger.getLogger(AppLogger.class.getName());
+        _configJSON = json;
+    }
+
+    /**
+     * Constructor for configuration file
+     * 
+     * @param configFile
+     *            The configuration file
+     * @throws IOException
+     *             If configuration file can not be found
+     * @throws JSONException
+     *             If configuration file can not be parsed
+     */
+    public ConfigReader(String configFile) throws IOException, JSONException {
+        _logger = AppLogger.getLogger();
+        _configFile = configFile;
+        // _configJSON = new
+        // JSONObject(loader.getResource(_configFile).toString());
+        _configJSON = new JSONObject(IOUtils.toString(new FileReader(_configFile)));
+    }
 
 }

@@ -30,115 +30,132 @@ import com.mongodb.MongoException;
  */
 public class MongoMgr {
 
-	/**
-	 * Closes the database connection
-	 */
-	public void close() {
-		_mongo.close();
-	}
+    /**
+     * Closes the database connection
+     */
+    public void close() {
+        _mongo.close();
+    }
 
-	/**
-	 * @param collection The collection to work with
-	 */
-	protected void setCollection(String collection) {
-		_collection = _database.getCollection(collection);
-	}
+    /**
+     * @param collection
+     *            The collection to work with
+     */
+    protected void setCollection(String collection) {
+        _collection = _database.getCollection(collection);
+    }
 
-	/**
-	 * @param database Th database to work with
-	 */
-	protected void setDatabase(String database) {
-		_database = _mongo.getDB(database);
-	}
+    /**
+     * @param database
+     *            Th database to work with
+     */
+    protected void setDatabase(String database) {
+        _database = _mongo.getDB(database);
+    }
 
-	/** 
-	 * @return The current working mongo
-	 */
-	public Mongo getMongo() {
-		return _mongo;
-	}
+    /**
+     * @return The current working mongo
+     */
+    public Mongo getMongo() {
+        return _mongo;
+    }
 
-	/**
-	 * @return The current working database
-	 */
-	public DB getDatabase() {
-		return _database;
-	}
-	
-	/**
-	 * @return The current working collection 
-	 */
-	public DBCollection getCollection() {
-		return _collection;
-	}
-	
-	/**
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @throws UnknownHostException If the database host cannot be resolved
-	 * @throws MongoException If it is unable to connect to a running mongod
-	 */
-	protected void setMongo(String host, Integer port) throws UnknownHostException, MongoException {
-		_mongo = new Mongo(host, port);
-	}
-	
+    /**
+     * @return The current working database
+     */
+    public DB getDatabase() {
+        return _database;
+    }
 
-	/**
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @throws UnknownHostException If the database host cannot be resolved
-	 */
-	public MongoMgr(String host, Integer port) throws UnknownHostException {
-		_host = host;
-		_port = port;
-		setMongo(host, port);
-	}
+    /**
+     * @return The current working collection
+     */
+    public DBCollection getCollection() {
+        return _collection;
+    }
 
-	/**
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @throws UnknownHostException If the database host cannot be resolved
-	 */
-	public MongoMgr(String host, Integer port, String database) throws UnknownHostException {
-		this(host, port);
-		setDatabase(database);
-	}
+    /**
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @throws UnknownHostException
+     *             If the database host cannot be resolved
+     * @throws MongoException
+     *             If it is unable to connect to a running mongod
+     */
+    protected void setMongo(String host, Integer port) throws UnknownHostException, MongoException {
+        _mongo = new Mongo(host, port);
+    }
 
-	/**
-	 * @param host The hostname of the database
-	 * @param port The port number of the database
-	 * @param database The name of the database
-	 * @param collection The name of the collection
-	 * @throws UnknownHostException If the database host cannot be resolved
-	 */
-	public MongoMgr(String host, Integer port, String database, String collection) throws UnknownHostException {
-		this(host, port, database);
-		setCollection(collection);
-	}
+    /**
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @throws UnknownHostException
+     *             If the database host cannot be resolved
+     */
+    public MongoMgr(String host, Integer port) throws UnknownHostException {
+        _host = host;
+        _port = port;
+        setMongo(host, port);
+    }
 
-	/**
-	 * working collection
-	 */
-	protected DBCollection	_collection;
-	
-	/**
-	 * working database
-	 */
-	protected DB _database;
-	
-	/**
-	 * working host
-	 */
-	protected String _host;
-	
-	/**
-	 * working mongo
-	 */
-	protected Mongo	_mongo;
-	
-	/**
-	 * working port
-	 */
-	protected Integer _port;
+    /**
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @throws UnknownHostException
+     *             If the database host cannot be resolved
+     */
+    public MongoMgr(String host, Integer port, String database) throws UnknownHostException {
+        this(host, port);
+        setDatabase(database);
+    }
+
+    /**
+     * @param host
+     *            The hostname of the database
+     * @param port
+     *            The port number of the database
+     * @param database
+     *            The name of the database
+     * @param collection
+     *            The name of the collection
+     * @throws UnknownHostException
+     *             If the database host cannot be resolved
+     */
+    public MongoMgr(String host, Integer port, String database, String collection) throws UnknownHostException {
+        this(host, port, database);
+        setCollection(collection);
+    }
+
+    /**
+     * working collection
+     */
+    protected DBCollection _collection;
+
+    /**
+     * working database
+     */
+    protected DB _database;
+
+    /**
+     * working host
+     */
+    protected String _host;
+
+    /**
+     * working mongo
+     */
+    protected Mongo _mongo;
+
+    /**
+     * working port
+     */
+    protected Integer _port;
 }

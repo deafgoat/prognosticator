@@ -26,22 +26,22 @@ import java.io.File;
 
 import org.junit.Test;
 
-
 public class CharterIntTests {
 
-	static final String	_attribute	= "ChangeWindDirect";
-	static final String	_config		= "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
+    static final String _attribute = "ChangeWindDirect";
+    static final String _config = "src/example/com/deafgoat/ml/prognosticator/example/weather/weatherConfig.json";
 
-	@Test
-	public final void testCharter() throws Exception {
-		Experimenter experimenter = new Experimenter(_config);
-		String[] files = new String[] { experimenter._config._trueNegatives, experimenter._config._truePositives, experimenter._config._falseNegatives, experimenter._config._falsePositives };
-		Charter charter = new Charter(experimenter);
-		File png = new File(_attribute + ".png");
-		if (png.exists()) {
-			assertTrue("Image could not be deleted", png.delete());
-		}
-		charter.saveCategorical(_attribute, files);
-		assertTrue("Image not saved properly", png.exists());
-	}
+    @Test
+    public final void testCharter() throws Exception {
+        Experimenter experimenter = new Experimenter(_config);
+        String[] files = new String[] { experimenter._config._trueNegatives, experimenter._config._truePositives,
+                experimenter._config._falseNegatives, experimenter._config._falsePositives };
+        Charter charter = new Charter(experimenter);
+        File png = new File(_attribute + ".png");
+        if (png.exists()) {
+            assertTrue("Image could not be deleted", png.delete());
+        }
+        charter.saveCategorical(_attribute, files);
+        assertTrue("Image not saved properly", png.exists());
+    }
 }

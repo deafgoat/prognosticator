@@ -26,17 +26,21 @@ import weka.core.converters.ArffSaver;
  * Utility to write Instances objects to ARFF.
  */
 public class InstancesWriter {
-	
-	/**
-	 * Saves an Instances object to .ARFF
-	 * @param instances The set of instances to write
-	 * @param outFile The file to which to write the instances
-	 * @throws IOException If instances object can not be written
-	 */
-	public static void writeInstances(Instances instances, String outFile) throws IOException {
-		ArffSaver saver = new ArffSaver();
-		saver.setInstances(instances);
-		saver.setFile(new File(outFile));
-		saver.writeBatch();
-	}
+
+    /**
+     * Saves an Instances object to .ARFF
+     * 
+     * @param instances
+     *            The set of instances to write
+     * @param outFile
+     *            The file to which to write the instances
+     * @throws IOException
+     *             If instances object can not be written
+     */
+    public static void writeInstances(Instances instances, String outFile) throws IOException {
+        ArffSaver saver = new ArffSaver();
+        saver.setInstances(instances);
+        saver.setFile(new File(outFile));
+        saver.writeBatch();
+    }
 }

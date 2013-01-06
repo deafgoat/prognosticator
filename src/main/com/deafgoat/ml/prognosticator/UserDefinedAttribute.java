@@ -25,27 +25,35 @@ import java.util.Map;
  */
 public abstract class UserDefinedAttribute {
 
-	/**
-	 * Returns the name of the attribute
-	 * @return the name of the attribute
-	 */
-	public abstract String getAttributeName();
+    /**
+     * Returns the name of the attribute
+     * 
+     * @return the name of the attribute
+     */
+    public abstract String getAttributeName();
 
-	/**
-	 * Returns the attribute value. The user should ensure to take care of
-	 * missing values in data as well. The user can access variables by using
-	 * the attribute's "attributeName" or "rawAttributeName" if the former is
-	 * not defined.
-	 * @param instance The current instance
-	 * @param attributeMap Contains a mapping of attribute name to its location in the current instance
-	 * @param config The application configuration object
-	 * @return The value of the attribute on a given instance
-	 */
-	public abstract String getAttributeValue(List<String> instance, Map<String, Integer> attributeMap, ConfigReader config);
+    /**
+     * Returns the attribute value. The user should ensure to take care of
+     * missing values in data as well. The user can access variables by using
+     * the attribute's "attributeName" or "rawAttributeName" if the former is
+     * not defined.
+     * 
+     * @param instance
+     *            The current instance
+     * @param attributeMap
+     *            Contains a mapping of attribute name to its location in the
+     *            current instance
+     * @param config
+     *            The application configuration object
+     * @return The value of the attribute on a given instance
+     */
+    public abstract String getAttributeValue(List<String> instance, Map<String, Integer> attributeMap,
+            ConfigReader config);
 
-	/**
-	 * Returns the user defined attribute
-	 * @return the created attribute
-	 */
-	public abstract Attributes getUserDefinedAttribute();
+    /**
+     * Returns the user defined attribute
+     * 
+     * @return the created attribute
+     */
+    public abstract Attributes getUserDefinedAttribute();
 }

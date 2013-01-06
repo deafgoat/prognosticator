@@ -32,68 +32,68 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class MongoExperimenterIntTests {
 
-	static final String	_collection	= "configuration";
-	static final String	_config		= "weatherConfig.json";
-	static final String	_database	= "weather";
-	static Experimenter	_experimenter;
-	static final String	_host		= "localhost";
-	static String[]		_json;
-	static MongoExport	_mongoExport;
-	static MongoImport	_mongoImport;
-	static final int	_port		= 27017;
+    static final String _collection = "configuration";
+    static final String _config = "weatherConfig.json";
+    static final String _database = "weather";
+    static Experimenter _experimenter;
+    static final String _host = "localhost";
+    static String[] _json;
+    static MongoExport _mongoExport;
+    static MongoImport _mongoImport;
+    static final int _port = 27017;
 
-	@Before
-	public final void doMongoExport() throws FileNotFoundException, IOException, JSONException {
-		initMongoExport();
-		_mongoExport.writeJSON();
-	}
+    @Before
+    public final void doMongoExport() throws FileNotFoundException, IOException, JSONException {
+        initMongoExport();
+        _mongoExport.writeJSON();
+    }
 
-	@Before
-	public final void initExperimenter() throws Exception {
-		_experimenter = new Experimenter(_config);
-	}
+    @Before
+    public final void initExperimenter() throws Exception {
+        _experimenter = new Experimenter(_config);
+    }
 
-	@Before
-	public final void initMongoExport() throws FileNotFoundException, IOException, JSONException {
-		_json = new String[] { _config };
-		_mongoExport = new MongoExport(_json, _host, _port, _database, _collection);
-	}
+    @Before
+    public final void initMongoExport() throws FileNotFoundException, IOException, JSONException {
+        _json = new String[] { _config };
+        _mongoExport = new MongoExport(_json, _host, _port, _database, _collection);
+    }
 
-	@Before
-	public final void initMongoImport() throws FileNotFoundException, IOException, JSONException {
-		_mongoImport = new MongoImport(_host, _port, _database, _collection);
-	}
+    @Before
+    public final void initMongoImport() throws FileNotFoundException, IOException, JSONException {
+        _mongoImport = new MongoImport(_host, _port, _database, _collection);
+    }
 
-	@Test
-	public final void testExperimenter() throws Exception {
-		File model, prediction;
-		ArrayList<JSONObject> configuration = _mongoImport.getAllConfigurations();
-		for (int i = 0; i < configuration.size(); i++) {
-			prediction = new File(_experimenter._config._predictionFile);
-			model = new File(_experimenter._config._modelFile);
-			if (model.exists()) {
-				assertTrue("Model could not be deleted", model.delete());
-			}
-			_experimenter.buildModel();
-			assertTrue("Model not written!", model.exists());
-			if (prediction.exists()) {
-				assertTrue("Prediction could not be deleted", prediction.delete());
-			}
-			_experimenter.predict();
-			assertTrue("Prediction not written!", prediction.exists());
-		}
-	}
+    @Test
+    public final void testExperimenter() throws Exception {
+        File model, prediction;
+        ArrayList<JSONObject> configuration = _mongoImport.getAllConfigurations();
+        for (int i = 0; i < configuration.size(); i++) {
+            prediction = new File(_experimenter._config._predictionFile);
+            model = new File(_experimenter._config._modelFile);
+            if (model.exists()) {
+                assertTrue("Model could not be deleted", model.delete());
+            }
+            _experimenter.buildModel();
+            assertTrue("Model not written!", model.exists());
+            if (prediction.exists()) {
+                assertTrue("Prediction could not be deleted", prediction.delete());
+            }
+            _experimenter.predict();
+            assertTrue("Prediction not written!", prediction.exists());
+        }
+    }
 
-	@Test
-	public final void removeAllConfig() throws FileNotFoundException, IOException, JSONException {
-		initMongoImport();
-		ArrayList<JSONObject> configuration = _mongoImport.getAllConfigurations();
-		for (int i = 0; i < configuration.size(); i++) {
-			assertTrue("Could not remove configuration!", _mongoImport.removeConfiguration(configuration.get(i).getString("name")));
-		}
-	}
+    @Test
+    public final void removeAllConfig() throws FileNotFoundException, IOException, JSONException {
+        initMongoImport();
+        ArrayList<JSONObject> configuration = _mongoImport.getAllConfigurations();
+        for (int i = 0; i < configuration.size(); i++) {
+            assertTrue("Could not remove configuration!",
+                    _mongoImport.removeConfiguration(configuration.get(i).getString("name")));
+        }
+    }
 
 }

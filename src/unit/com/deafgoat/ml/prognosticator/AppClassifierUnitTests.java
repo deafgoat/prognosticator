@@ -26,18 +26,17 @@ import org.junit.Test;
 
 import weka.core.Instances;
 
-
 public class AppClassifierUnitTests {
 
-	static AppClassifier	_classifier;
-	static final String		_config		= "weatherConfig.json";
-	static final String		_inputARFF	= "weather-dump.arff";
-	static Instances		_instances;
+    static AppClassifier _classifier;
+    static final String _config = "weatherConfig.json";
+    static final String _inputARFF = "weather-dump.arff";
+    static Instances _instances;
 
-	@Test
-	public final void testClassifier() throws Exception {
-		_instances = new InstancesReader(_inputARFF).readFromARFF();
-		_classifier = new AppClassifier(_instances, new ConfigReader(_config));
-		assertNotNull("Could not create classifier", _classifier);
-	}
+    @Test
+    public final void testClassifier() throws Exception {
+        _instances = new InstancesReader(_inputARFF).readFromARFF();
+        _classifier = new AppClassifier(_instances, new ConfigReader(_config));
+        assertNotNull("Could not create classifier", _classifier);
+    }
 }

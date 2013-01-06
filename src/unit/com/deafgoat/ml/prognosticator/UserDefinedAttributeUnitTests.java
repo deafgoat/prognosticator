@@ -31,72 +31,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public final class UserDefinedAttributeUnitTests extends UserDefinedAttribute {
 
-	static Attributes	_attribute;
+    static Attributes _attribute;
 
-	@Before
-	public final void createAttribute() throws Exception {
-		_attribute = Attributes.createAttribute("9AM_to_3PM_temp_change", "9AM_to_3PM_temp_change", "nominal", true);
-	}
+    @Before
+    public final void createAttribute() throws Exception {
+        _attribute = Attributes.createAttribute("9AM_to_3PM_temp_change", "9AM_to_3PM_temp_change", "nominal", true);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.deafgoat.ml.prognosticator.UserDefinedAttribute#getAttributeName()
-	 */
-	@Override
-	public String getAttributeName() {
-		return UserDefinedAttributeUnitTests._attribute.getAttributeName();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.deafgoat.ml.prognosticator.UserDefinedAttribute#getAttributeName()
+     */
+    @Override
+    public String getAttributeName() {
+        return UserDefinedAttributeUnitTests._attribute.getAttributeName();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.deafgoat.ml.user.UserDefinedAttribute#getAttributeValue
-	 * (java.util.List, java.util.Map)
-	 */
-	@Override
-	public String getAttributeValue(List<String> instance, Map<String, Integer> attributeMap, ConfigReader cfg) {
-		String str3PMTemp = instance.get(attributeMap.get("Temp3pm"));
-		String str9AMTemp = instance.get(attributeMap.get("Temp9am"));
-		Double diffTemp = Double.parseDouble(str3PMTemp) - Double.parseDouble(str9AMTemp);
-		NumberFormat formatter = new DecimalFormat("#0.00");
-		return formatter.format(diffTemp);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.deafgoat.ml.user.UserDefinedAttribute#getAttributeValue
+     * (java.util.List, java.util.Map)
+     */
+    @Override
+    public String getAttributeValue(List<String> instance, Map<String, Integer> attributeMap, ConfigReader cfg) {
+        String str3PMTemp = instance.get(attributeMap.get("Temp3pm"));
+        String str9AMTemp = instance.get(attributeMap.get("Temp9am"));
+        Double diffTemp = Double.parseDouble(str3PMTemp) - Double.parseDouble(str9AMTemp);
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        return formatter.format(diffTemp);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.deafgoat.ml.prognosticator.UserDefinedAttribute#getAttributeName()
-	 * getUserDefinedAttributes()
-	 */
-	@Override
-	public Attributes getUserDefinedAttribute() {
-		return _attribute;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.deafgoat.ml.prognosticator.UserDefinedAttribute#getAttributeName()
+     * getUserDefinedAttributes()
+     */
+    @Override
+    public Attributes getUserDefinedAttribute() {
+        return _attribute;
+    }
 
-	@Test
-	public final void testAttributeCreation() throws Exception {
-		createAttribute();
-		assertNotNull("Could not create attribute", getUserDefinedAttribute());
-	}
+    @Test
+    public final void testAttributeCreation() throws Exception {
+        createAttribute();
+        assertNotNull("Could not create attribute", getUserDefinedAttribute());
+    }
 
-	@Test
-	public final void testGetAttributeValue() {
-		List<String> instance = new ArrayList<String>();
-		Map<String, Integer> attributeMap = new HashMap<String, Integer>();
-		ConfigReader cfgRdr = new ConfigReader(new JSONObject());
-		instance.add("26");
-		instance.add("24");
-		attributeMap.put("Temp3pm", 0);
-		attributeMap.put("Temp9am", 1);
-		assertEquals("Incorrect attribute value returned", "2.00", getAttributeValue(instance, attributeMap, cfgRdr));
-	}
+    @Test
+    public final void testGetAttributeValue() {
+        List<String> instance = new ArrayList<String>();
+        Map<String, Integer> attributeMap = new HashMap<String, Integer>();
+        ConfigReader cfgRdr = new ConfigReader(new JSONObject());
+        instance.add("26");
+        instance.add("24");
+        attributeMap.put("Temp3pm", 0);
+        attributeMap.put("Temp9am", 1);
+        assertEquals("Incorrect attribute value returned", "2.00", getAttributeValue(instance, attributeMap, cfgRdr));
+    }
 
 }

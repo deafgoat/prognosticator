@@ -25,23 +25,22 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-
 public class AttributesUnitTests {
 
-	@Test
-	public final void testAttributeCreation() {
-		Attributes att = Attributes.createAttribute("name", "", "string", false);
-		assertNotNull(att);
-	}
+    @Test
+    public final void testAttributeCreation() {
+        Attributes att = Attributes.createAttribute("name", "", "string", false);
+        assertNotNull(att);
+    }
 
-	@Test
-	public final void testAttributeNameMutation() {
-		Attributes att = Attributes.createAttribute("name", "", "string", false);
-		assertEquals("name", att.getRawAttributeName());
-		assertEquals("name", att.getAttributeName());
-		att.setAttributeName("hello");
-		assertEquals("hello", att.getAttributeName());
-		assertEquals("name", att.getRawAttributeName());
-	}
+    @Test
+    public final void testAttributeNameMutation() {
+        Attributes att = Attributes.createAttribute("name", "", "string", false);
+        assertEquals("name", att.getRawAttributeName());
+        assertEquals("name", att.getAttributeName());
+        att.setAttributeName("hello");
+        assertEquals("hello", att.getAttributeName());
+        assertEquals("name", att.getRawAttributeName());
+    }
 
 }

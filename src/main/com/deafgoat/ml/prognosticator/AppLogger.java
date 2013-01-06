@@ -28,16 +28,17 @@ import org.apache.log4j.PropertyConfigurator;
  */
 public final class AppLogger {
 
-	/**
-	 * Provides the global logger for the application
-	 * @return global logger
-	 * @throws IOException
-	 */
-	public static Logger getLogger() {
-		PropertyConfigurator.configure("logging.properties");
-		final Throwable t = new Throwable();
-		final StackTraceElement methodCaller = t.getStackTrace()[1];
-		final Logger logger = Logger.getLogger(methodCaller.getClassName());
-		return logger;
-	}
+    /**
+     * Provides the global logger for the application
+     * 
+     * @return global logger
+     * @throws IOException
+     */
+    public static Logger getLogger() {
+        PropertyConfigurator.configure("logging.properties");
+        final Throwable t = new Throwable();
+        final StackTraceElement methodCaller = t.getStackTrace()[1];
+        final Logger logger = Logger.getLogger(methodCaller.getClassName());
+        return logger;
+    }
 }
